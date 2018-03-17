@@ -73,7 +73,6 @@ void parserAmostras(char *strn, int linha) {
 }
 
 void imprimeVetores() {
-printf("pHELLOWOWOWO");
 	int i = 0;
 	int j = 0;
 	for(j = 0; j < tamanhoAmostras; j++) {
