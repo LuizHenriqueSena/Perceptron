@@ -13,16 +13,25 @@ int amostras[xn][tamanhoAmostras];
 int saidaDesejada[tamanhoAmostras];
 const char separadorEntradas[2] = ";";
 const char separadorSaida[2] = "-";
-int funcaoSaida(int u) {
+int funcaoSaida(float u) {
 	if (u<0) return 0;
 	else return 1;
 }
 
 void geraPesosAleatorios(){
+int cont = 0;
 	for(cont = 0; cont < xn; cont++) {
 		pesosSinapticos[cont] = ((float)(rand()%100))/100; 
 		printf("PESOS ALEATORIO: %d com valor: %.2f \n", cont, pesosSinapticos[cont]);
 	}
+}
+
+void imprimeRedeResultante() {
+int cont = 0;
+	for(cont = 0; cont < xn; cont++) {
+		printf("PESO resultante: %d com valor: %.2f \n", cont, pesosSinapticos[cont]);
+	}
+	printf("limiar de ativacao resultando: %d com valor: %.2f \n", cont, pesosSinapticos[xn]);
 }
 
 void treinaRede() {
@@ -32,42 +41,22 @@ void treinaRede() {
 	int contAmostras = 0;
 	int cont = 0;
 	float resultado= 0;
+	int saida;
 	//computa resposta para entradas
 	for (contAmostras = 0; contAmostras < tamanhoAmostras;contAmostras++) {
 		for(cont = 0; cont < xn; cont++) {
 			resultado += pesosSinapticos[cont]*amostras[cont][contAmostras];	
 		}
 		resultado = resultado - pesosSinapticos[xn];
-		if(resultado != saidaDeseja[contAmostras]) {
-			
+		saida = funcaoSaida(resultado);
+		if(saida != saidaDesejada[contAmostras]) {
+			//ajusta pesos
+		}		
+		else {
+			//nao ajusta
+		}
 	}
-
-
-
-
-}
-
-void preencheVetorDeAmostras() {
-	    FILE * fp;
-    char * line = NULL;
-    size_t len = 0;
-    ssize_t read;
-    int linha = 0;
-
-    fp = fopen("teste.txt", "r");
-    if (fp == NULL)
-        exit(EXIT_FAILURE);
-
-    while ((read = getline(&line, &len, fp)) != -1) {
-        printf("Retrieved line of length %zu :\n", read);
-        printf("%s", line);
-	parserAmostras(line, linha);
-	linha++;
-    }
-
-    fclose(fp);
-    if (line)
-        free(line);
+	imprimeRedeResultante();
 }
 
 void parserAmostras(char *strn, int linha) {
@@ -101,7 +90,30 @@ void parserAmostras(char *strn, int linha) {
    }
 }
 
-void imprimeVetores() {
+void preencheVetorDeAmostras() {
+	    FILE * fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    int linha = 0;
+
+    fp = fopen("teste.txt", "r");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+
+    while ((read = getline(&line, &len, fp)) != -1) {
+        printf("Retrieved line of length %zu :\n", read);
+        printf("%s", line);
+	parserAmostras(line, linha);
+	linha++;
+    }
+
+    fclose(fp);
+    if (line)
+        free(line);
+}
+
+void imprimeVetores(void) {
 	int i = 0;
 	int j = 0;
 	for(j = 0; j < tamanhoAmostras; j++) {
