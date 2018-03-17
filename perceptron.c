@@ -51,6 +51,7 @@ void treinaRede() {
 		saida = funcaoSaida(resultado);
 		if(saida != saidaDesejada[contAmostras]) {
 			//ajusta pesos
+			
 		}		
 		else {
 			//nao ajusta
