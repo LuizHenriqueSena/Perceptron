@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define xn 4
-#define tamanhoAmostras 10
+#define xn 2
+#define tamanhoAmostras 8
 
 
 
 int entradas[xn];
-int pesosSinapticos[xn + 1];
+float pesosSinapticos[xn + 1];
 int amostras[xn][tamanhoAmostras];
 int saidaDesejada[tamanhoAmostras];
 const char separadorEntradas[2] = ";";
@@ -18,7 +18,34 @@ int funcaoSaida(int u) {
 	else return 1;
 }
 
-int treinaAmostra() {}
+void geraPesosAleatorios(){
+	for(cont = 0; cont < xn; cont++) {
+		pesosSinapticos[cont] = ((float)(rand()%100))/100; 
+		printf("PESOS ALEATORIO: %d com valor: %.2f \n", cont, pesosSinapticos[cont]);
+	}
+}
+
+void treinaRede() {
+	pesosSinapticos[0]=0.5;
+	pesosSinapticos[1]=0.5;
+	pesosSinapticos[2]= 0;
+	int contAmostras = 0;
+	int cont = 0;
+	float resultado= 0;
+	//computa resposta para entradas
+	for (contAmostras = 0; contAmostras < tamanhoAmostras;contAmostras++) {
+		for(cont = 0; cont < xn; cont++) {
+			resultado += pesosSinapticos[cont]*amostras[cont][contAmostras];	
+		}
+		resultado = resultado - pesosSinapticos[xn];
+		if(resultado != saidaDeseja[contAmostras]) {
+			
+	}
+
+
+
+
+}
 
 void preencheVetorDeAmostras() {
 	    FILE * fp;
@@ -56,11 +83,7 @@ void parserAmostras(char *strn, int linha) {
    
    /* walk through other tokens */
    while( token != NULL ) {
-      token = strtok(NULL, separadorEntradas);
-      amostras[contx][linha] = atoi(token);
-	printf("VALOR DO segundo CAST : %d \n",amostras[contx][linha]);
-      contx++;
-      if(contx == xn - 1) {
+      if(contx >= xn - 1) {
         token = strtok(NULL, separadorSaida);
 	amostras[contx][linha] = atoi(token);
 	printf("VALOR DO ultimo CAST : %d \n",amostras[contx][linha]);
@@ -68,8 +91,14 @@ void parserAmostras(char *strn, int linha) {
   	saidaDesejada[linha] = atoi(token);
 	printf("VALOR Da primeira saida: %d \n",saidaDesejada[linha]);
 	token = strtok(NULL, separadorSaida);
+      }
+      else {
+	 token = strtok(NULL, separadorEntradas);
+         amostras[contx][linha] = atoi(token);
+	 printf("VALOR DO segundo CAST : %d \n",amostras[contx][linha]);
+         contx++;
+      }
    }
-}
 }
 
 void imprimeVetores() {
@@ -85,8 +114,9 @@ void imprimeVetores() {
 }
 
 int main() {
-preencheVetorDeAmostras();
-imprimeVetores();
+	preencheVetorDeAmostras();
+	imprimeVetores();
+	treinaRede();
 	return 0;
 }
 
