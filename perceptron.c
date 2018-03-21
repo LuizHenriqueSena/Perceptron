@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define xn 7
-#define tamanhoAmostras 47
+#define xn 2
+#define tamanhoAmostras 48
 #define n 0.5
 
 
@@ -46,20 +46,21 @@ void treinaRede() {
 	int saida;
 	//computa resposta para entradas
 	for (contAmostras = 0; contAmostras < tamanhoAmostras;contAmostras++) {
+		resultado = 0;
 		for(cont = 0; cont < xn; cont++) {
 			resultado += pesosSinapticos[cont]*amostras[cont][contAmostras];	
 		}
-		resultado = resultado - pesosSinapticos[xn];
+		resultado = resultado + pesosSinapticos[xn];
 		saida = funcaoSaida(resultado);
-printf("para a amostra: %d , tem-se  saida: %d e saidaDesejada: %d \n", contAmostras, saida, saidaDesejada[contAmostras]);
+		printf("para a amostra: %d , tem-se  saida: %d e saidaDesejada: %d \n", contAmostras, saida, saidaDesejada[contAmostras]);
 		if(saida != saidaDesejada[contAmostras]) {
 			//ajusta pesos
 			for(cont2 = 0; cont2 < xn; cont2++) {
 				pesosSinapticos[cont2] = pesosSinapticos[cont2] + ((n)*(saidaDesejada[contAmostras] + 
 				(-1)*saida)*(amostras[cont2][contAmostras]));	
 			}
-			pesosSinapticos[xn] = pesosSinapticos[xn] + ((n)*(saidaDesejada[contAmostras] + 
-			(-1)*saida)*1);	
+			pesosSinapticos[xn] = pesosSinapticos[xn] + ((saidaDesejada[contAmostras] + 
+			(-1)*saida));	
 }
 		else {
 			//nao ajusta
