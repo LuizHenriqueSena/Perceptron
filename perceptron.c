@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define xn 2
-#define tamanhoAmostras 10
+#define xn 7
+#define tamanhoAmostras 47
 #define n 0.5
 
 
